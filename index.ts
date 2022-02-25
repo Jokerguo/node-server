@@ -1,5 +1,6 @@
 import * as http from 'http'
 import { IncomingMessage, ServerResponse } from 'http'
+import * as fs from 'fs'
 
 const server = http.createServer()
 
@@ -16,9 +17,9 @@ server.on('request', (request: IncomingMessage, response: ServerResponse) => {
     const body = Buffer.concat(arr).toString()
     response.statusCode = 200
     response.setHeader('X-Guo', `I'm guo`)
-    response.write('111\n')
-    response.write('222\n')
-    response.write('333\n')
+    response.setHeader('Content-Type', 'image/png')
+    const img = fs.readFileSync('./11.png', 'binary')
+    response.write(img, 'binary')
     response.end()
   })
 })
